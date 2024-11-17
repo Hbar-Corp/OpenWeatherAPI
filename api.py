@@ -1,5 +1,8 @@
 import os
+
+import pandas as pd
 import requests
+import weather_parser as parser
 from constant import *
 from dotenv import load_dotenv
 
@@ -48,7 +51,7 @@ class WeatherRequester:
         response = requests.get(url=url)
         return response.json()
 
-    def get_weather_forcast_by_city_name(self, city_name: str, units: str = "celcius", lang: str = "fr") -> dict:
+    def get_weather_forcast_by_city_name(self, city_name: str, units: str = "celcius", lang: str = "fr") -> pd.DataFrame:
         """
 
         :param city_name:
@@ -58,4 +61,6 @@ class WeatherRequester:
         """
         url = end_point + f"forecast?q={city_name}&lang={lang}&appid={self._api_key}&units={UNITS[units]}"
         response = requests.get(url=url)
-        return response.json()
+        json_data = response.json()
+        _df = parser.parse_weather_forcast(json_data)
+        return _df
