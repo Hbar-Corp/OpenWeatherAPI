@@ -19,7 +19,7 @@ class WeatherRequester:
         :param lang: Language des données requêtées (Français par défaut)
         :return:
         """
-        url = end_point + f"lat={latitude}&lon={longitude}&lang={lang}&appid={self._api_key}&units={UNITS[units]}"
+        url = end_point + f"weather?lat={latitude}&lon={longitude}&lang={lang}&appid={self._api_key}&units={UNITS[units]}"
         response = requests.get(url=url)
         return response.json()
 
@@ -31,6 +31,31 @@ class WeatherRequester:
         :param lang:
         :return:
         """
-        url = end_point + f"q={city_name}&lang={lang}&appid={self._api_key}&units={UNITS[units]}"
+        url = end_point + f"weather?q={city_name}&lang={lang}&appid={self._api_key}&units={UNITS[units]}"
+        response = requests.get(url=url)
+        return response.json()
+
+    def get_weather_forcast_by_location(self, latitude: float, longitude: float, units: str = "celcius", lang: str = "fr") -> dict:
+        """
+
+        :param latitude:
+        :param longitude:
+        :param units:
+        :param lang:
+        :return:
+        """
+        url = end_point + f"forecast?lat={latitude}&lon={longitude}&lang={lang}&appid={self._api_key}&units={UNITS[units]}"
+        response = requests.get(url=url)
+        return response.json()
+
+    def get_weather_forcast_by_city_name(self, city_name: str, units: str = "celcius", lang: str = "fr") -> dict:
+        """
+
+        :param city_name:
+        :param units:
+        :param lang:
+        :return:
+        """
+        url = end_point + f"forecast?q={city_name}&lang={lang}&appid={self._api_key}&units={UNITS[units]}"
         response = requests.get(url=url)
         return response.json()
