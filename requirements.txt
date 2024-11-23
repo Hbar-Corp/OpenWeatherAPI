@@ -5,3 +5,4 @@ requests
 python-dotenv
 dash-mantine-components
 dash-bootstrap-components
+dash-ag-grid
