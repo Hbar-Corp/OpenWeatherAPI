@@ -65,9 +65,11 @@ def get_data(city_name: str, n_clicks: int):
     actual_data = weather.get_weather_by_city_name(city_name.capitalize())
     request_dt = datetime.fromtimestamp(actual_data["dt"]).strftime("%d %b %Y, %H:%M")
     actu_icon = int("n" in actual_data["weather"][0]["icon"]) if actual_data["weather"][0]["id"] >= 800 else 0
-
+    forcast_data["Date"] = ""
+    for i in forcast_data.index:
+        forcast_data.at[i, "Date"] = forcast_data.loc[i, "Datetime"].strftime("%d %b %Y, %H:%M")
     _column = [
-        {"field": "Datetime", "headerName": "Date"},
+        {"field": "Date", "headerName": "Date"},
         {"field": "Temp", "headerName": "Température"},
         {"field": "Humidité"},
         {"field": "Description"}
@@ -107,4 +109,4 @@ def get_data(city_name: str, n_clicks: int):
 
 if __name__ == "__main__":
     app.title = "Weather App"
-    app.run()
+    app.run(port=8080)
